@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BukuController;
 use App\Http\Controllers\CobaController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,6 @@ Route::get('/', function () {
 
 
 Route::get('/coba', [CobaController::class, 'fungsiRute']);
+
+
+Route::get('/buku', [BukuController::class, 'index']);
