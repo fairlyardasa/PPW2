@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+    @extends('buku.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href={{ asset('simplelineicons/css/simple-line-icons.css') }}>
-    <title>Index Buku</title>
-</head>
-
-<body>
-    <div class="d-flex flex-wrap mb-3 position-relative " style="height: 40px">
+    @section('title', 'Perpustakaan - Index Buku')
+        
+    @section('content')
+    <div class="d-flex flex-wrap m-3 position-relative " style="height: 40px">
+        <form class="d-flex flex-row gap-1" action="{{ route('buku.search') }}" method="get">
+            @csrf
+            <div>
+                <input type="text" name="kata" class="form-control" placeholder="Cari ..." style="float: right">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-md btn-primary icon-magnifier" style="height: 40px"></button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex flex-wrap m-3 position-relative " style="height: 40px">
+        <input type="text" name="tgl_terbit" id="tgl_terbit"  class="date form-control w-40" placeholder="yyyy/mm/dd" data-provide="datepicker">
+    </div>
+    <div class="d-flex flex-wrap position-relative " style="height: 40px">
         <a class="m-3 btn btn-success position-absolute top-0 end-0 icon-plus" href="{{ route('buku.create') }}" method="get"></a>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered my-4">
         <thead>
             <tr>
                 <th>id</th>
@@ -34,13 +40,13 @@
                 <td>{{"Rp ".number_format($buku->harga, 2, ',','.')}}</td>
                 <td>{{\Carbon\carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>
                 <td class="d-flex flex-row gap-1">
-                    <form class="" action="{{ route('buku.destroy', $buku->id) }}" method="post">
+                    <form class="" action="{{ route('buku.destroy', $buku->id) }}" method="POST">
                         @csrf
+                        @method('DELETE')
                         <button class="btn btn-danger icon-trash"
                             onclick="return confirm('yakin mau dihapus?')"></button>
                     </form>
-                    <form action="{{ route('buku.edit', $buku->id) }}" method="post">
-                        @csrf
+                    <form action="{{ route('buku.edit', $buku->id) }}">
                         <button class="btn btn-primary icon-pencil"></button>
                     </form>
                 </td>
@@ -48,9 +54,28 @@
             @endforeach
         </tbody>
     </table>
+    <div class="text-center" style="height: 80px;">
+        {{$data_buku->links('pagination::simple-bootstrap-4')}}
+    </div>
     <p class="text-center">Jumlah buku : {{$jumlah_buku}}</p>
     <p class="text-center">Total harga buku : {{"Rp ".number_format($total, 2, ',','.')}}</p>
+    @endsection
 
-</body>
+    @section('script')
+    <script type="text/javascript">
+        $('.date').datepicker(
+            {
+                format : 'yyyy/mm/dd',
+                autoclose : 'true'
+            }
+        )
+    </script>
 
-</html>
+    @if (Session::has('pesan'))
+    <div class="alert alert-success">
+        {{Session::get('pesan')}}
+    </div>
+        
+    @endif
+    @endsection
+

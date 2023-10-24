@@ -16,25 +16,46 @@
             @csrf
             <div class="mb-3">
                 <label  class="form-label">Judul</label>
-                <input class="form-control" type="text" name="judul" id="judul">
+                <input class="form-control" type="text" name="judul" id="judul" value="{{old ('judul')}}">
+                @error('judul')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label  class="form-label">Penulis</label>
-                <input class="form-control" type="text" name="penulis" id="penulis" >
+                <input class="form-control" type="text" name="penulis" id="penulis"  value="{{old('penulis')}}">
+                @error('penulis')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label  class="form-label">Harga</label>
-                <input class="form-control" type="text" name="harga" id="harga" >
+                <input class="form-control" type="text" name="harga" id="harga" value="{{ old('harga') }}" >
+                @error('harga')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+
             </div>
             <div class="mb-3">
-                <label  class="form-label">Date</label>
-                <input class="form-control" type="date" name="tgl_terbit" id="tgl_terbit">
+                <label  class="form-label" >Date</label>
+                <input class="form-control" type="date" name="tgl_terbit" id="tgl_terbit" value="{{ old('tgl_terbit') }}">
+                @error('tgl_terbit')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
             <button class="btn btn-primary" type="submit">Simpan</button>
             <a class="btn btn-danger" href="/buku"> Batal</a>   
             </div>
-        </form>
-    </div>  
 </body>
+
+{{--
+@if ($errors !== null && count($errors) > 0)
+    <ul class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>            
+        @endforeach
+    </ul>
+@endif    
+--}}
 </html>
