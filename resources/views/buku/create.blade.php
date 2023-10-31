@@ -1,3 +1,9 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Tambah Buku') }}
+        </h2>
+    </x-slot>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +16,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <h4>Tambah Buku</h4>
+    <div class="container mt-10">
         <form action="{{route('buku.store')}}" method="POST">
             @csrf
             <div class="mb-3">
@@ -59,3 +64,4 @@
 @endif    
 --}}
 </html>
+</x-app-layout>

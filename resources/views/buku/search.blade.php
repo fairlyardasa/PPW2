@@ -32,7 +32,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($data_buku as $buku)
+        @foreach($data_buku as $buku) 6
         <tr>
             <td>{{$buku -> id}}</td>
             <td>{{$buku -> judul}}</td>
