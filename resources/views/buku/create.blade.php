@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="container mt-10">
-        <form action="{{route('buku.store')}}" method="POST">
+        <form action="{{route('buku.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label  class="form-label">Judul</label>
@@ -47,6 +47,15 @@
                 @error('tgl_terbit')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+            </div>
+            <div class="mb-3">
+                <label for="thumbnail" class="form-label">Gambar Thumbnail</label>
+                <input type="file" class="form-control" name="thumbnail" id="thumbnail" value="{{old('thumbnail')}}>
+            </div>
+
+            <div class="mb-3">
+                <label for="galeri" class="form-label">Galeri</label>
+                <input type="file" class="form-control" name="galeri[]" id="galeri" multiple>
             </div>
             <div class="mb-3">
             <button class="btn btn-primary" type="submit">Simpan</button>

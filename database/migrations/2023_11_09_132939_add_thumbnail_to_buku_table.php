@@ -10,22 +10,20 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('buku', function (Blueprint $table) {
-            $table->id();
-            $table->string("judul");
-            $table->string("penulis");
-            $table->integer('harga');
-            $table->date('tgl_terbit');
-            $table->timestamps();
+        Schema::table('buku', function (Blueprint $table) {
+            $table->string('filename')->nullable();
+            $table->string('filepath')->nullable();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('buku');
+        Schema::table('buku', function (Blueprint $table) {
+            $table->dropColumn('filename');
+            $table->dropColumn('filepath');
+        });
     }
 };

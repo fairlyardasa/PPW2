@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('/buku/search', [BukuController::class, 'search'])->name('buku.search');
         Route::resource('buku', BukuController::class)->except(['show']);
+        Route::post('buku/delete_galeri/{id}', [BukuController::class, 'deleteGaleri'])->name('buku.delete_galeri');
     });
 });
 
