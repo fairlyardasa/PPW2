@@ -23,14 +23,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('buku', [BukuController::class, 'index'])->name('buku.index');
+Route::get('/detail-buku/{id}', [BukuController::class, 'galbuku'])->name('galeri.buku');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
     Route::middleware('admin')->group(function () {
         Route::get('/buku/search', [BukuController::class, 'search'])->name('buku.search');
-        Route::resource('buku', BukuController::class)->except(['show']);
+        Route::resource('buku', BukuController::class)->except(['show', 'index']);
         Route::post('buku/delete_galeri/{id}', [BukuController::class, 'deleteGaleri'])->name('buku.delete_galeri');
     });
 });

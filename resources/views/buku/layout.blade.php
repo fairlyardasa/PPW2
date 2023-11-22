@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    <link href="{{ asset('dist/css/lightbox.min.css') }}" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href={{ asset('simplelineicons/css/simple-line-icons.css') }}>
+    <script src="{{ asset('dist/js/lightbox-plus-jquery.min.js') }}"></script> 
     <title>@yield('title')</title>
 </head>
 

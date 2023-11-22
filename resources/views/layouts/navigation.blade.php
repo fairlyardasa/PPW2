@@ -12,17 +12,23 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if (Auth::check())
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::check() && Auth::user()-> role_id == 1)
+                    @endif
                     <x-nav-link :href="route('buku.index')" :active="request()->routeIs('buku')">
                         {{ __('Buku') }}
                     </x-nav-link>
-                    @endif
+                    <x-nav-link {{--:href="route()"--}} :active="request()->routeIs('buku')">
+                        {{ __('Galeri Buku') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
-
+            @if (Auth::check())
+                
+            
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
@@ -101,5 +107,7 @@
                 </form>
             </div>
         </div>
+        
     </div>
+    @endif
 </nav>

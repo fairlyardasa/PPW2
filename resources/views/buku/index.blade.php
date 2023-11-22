@@ -1,5 +1,3 @@
-@if (Auth::check() && Auth::user()-> role_id == 1)
-
 @extends('buku.layout')
 
 @section('title', 'Perpustakaan - Index Buku')
@@ -19,31 +17,39 @@
 <div class="d-flex flex-wrap m-3 position-relative " style="height: 40px">
     <input type="text" name="tgl_terbit" id="tgl_terbit"  class="date form-control w-40" placeholder="yyyy/mm/dd" data-provide="datepicker">
 </div>
+@if (Auth::check() && Auth::user()-> role_id == 1)
 <div class="d-flex flex-wrap position-relative " style="height: 40px">
     <a class="m-3 btn btn-success position-absolute top-0 end-0 icon-plus" href="{{ route('buku.create') }}" method="get"></a>
 </div>
+@endif
 <div class="px-4">
-    <table class="table table-striped table-bordered mt-4">
+    <table class="table table-striped table-bordered table-hover mt-4">
         <thead>
             <tr>
+                @if (Auth::check() && Auth::user()-> role_id == 1)
                 <th>id</th>
+                @endif
                 <th>cover</th>
                 <th>Judul Buku</th>
                 <th>Penulis</th>
                 <th>Harga</th>
                 <th>Tgl. Terbit</th>
+                @if (Auth::check() && Auth::user()-> role_id == 1)
                 <th>Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach($data_buku as $buku)
-            <tr>
+            <tr class="table-row" data-href="{{ route('galeri.buku', $buku->id) }}"  style="cursor: pointer;">
+                @if (Auth::check() && Auth::user()-> role_id == 1)
                 <td>{{$buku -> id}}</td>
+                @endif
                 <td>
                     @if ( $buku->filepath )
-                    <div class="relative h-10 w-10">
+                    <div class="relative h-400 w-300">
                     <img
-                    class="h-full w-full rounded-full object-cover object-center"
+                    class="h-full w-full object-cover object-center"
                     src="{{asset($buku->filepath)}}"
                     />
                     </div>
@@ -53,6 +59,7 @@
                 <td>{{$buku -> penulis}}</td>
                 <td>{{"Rp ".number_format($buku->harga, 2, ',','.')}}</td>
                 <td>{{\Carbon\carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>
+                @if (Auth::check() && Auth::user()-> role_id == 1)
                 <td class="d-flex flex-row gap-1">
                     <form class="" action="{{ route('buku.destroy', $buku->id) }}" method="POST">
                         @csrf
@@ -64,6 +71,7 @@
                         <button class="btn btn-primary icon-pencil"></button>
                     </form>
                 </td>
+                @endif
             </tr>
             @endforeach
         </tbody>
@@ -84,6 +92,12 @@
             autoclose : 'true'
         }
     )
+
+    $(document).ready(function($) {
+    $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
 </script>
 
 @if (Session::has('pesan'))
@@ -95,4 +109,4 @@
 @endsection
 
 
-@endif
+

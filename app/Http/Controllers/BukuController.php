@@ -163,7 +163,11 @@ class BukuController extends Controller
         return redirect()->back()->with('pesan', 'Gambar Galeri Berhasil Dihapus!');
     }
 
+    public function galbuku(string $id)
+    {
 
-
-
+        $bukus = Buku::find($id);
+        $galeris = $bukus->gallery()->orderBy('id', 'desc')->paginate(10);
+        return view('buku.galeri-buku', compact('bukus', 'galeris'));
+    }
 }
