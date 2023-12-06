@@ -86,12 +86,12 @@
 
 @section('script')
 <script type="text/javascript">
-    $('.date').datepicker(
-        {
-            format : 'yyyy/mm/dd',
-            autoclose : 'true'
-        }
-    )
+    // $('.date').datepicker(
+    //     {
+    //         format : 'yyyy/mm/dd',
+    //         autoclose : 'true'
+    //     }
+    // )
 
     $(document).ready(function($) {
     $(".table-row").click(function() {

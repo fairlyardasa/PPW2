@@ -20,13 +20,16 @@
                     <x-nav-link :href="route('buku.index')" :active="request()->routeIs('buku')">
                         {{ __('Buku') }}
                     </x-nav-link>
-                    <x-nav-link {{--:href="route()"--}} :active="request()->routeIs('buku')">
-                        {{ __('Galeri Buku') }}
+                    @if (Auth::check())
+                    <x-nav-link :href="route('myfavorite.buku')" :active="request()->routeIs('buku')">
+                        {{ __('Buku Favorite') }}
                     </x-nav-link>
+                    @endif
                     
                 </div>
             </div>
             @if (Auth::check())
+            
                 
             
             <!-- Settings Dropdown -->

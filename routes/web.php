@@ -30,6 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/detail-buku/{id}', [BukuController::class, 'galbuku'])->name('galeri.buku');
+    Route::post('/detail-buku/{id}', [BukuController::class, 'storeRating'])->name('rating.store');
+
+    // Bikin error
+    Route::post('/buku/myfavorite', [BukuController::class, 'storeFavorite'])->name('myfavorite.store');
+    Route::get('/buku/myfavorite', [BukuController::class, 'myfavorite'])->name('myfavorite.buku');
 
 
     Route::middleware('admin')->group(function () {

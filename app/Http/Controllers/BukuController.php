@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorite;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 use App\Models\Buku;
@@ -163,11 +165,68 @@ class BukuController extends Controller
         return redirect()->back()->with('pesan', 'Gambar Galeri Berhasil Dihapus!');
     }
 
+
+
     public function galbuku(string $id)
     {
 
         $bukus = Buku::find($id);
         $galeris = $bukus->gallery()->orderBy('id', 'desc')->paginate(10);
-        return view('buku.galeri-buku', compact('bukus', 'galeris'));
+        $averageRating = $bukus->averageRating();
+
+        if ($averageRating == 0) {
+            $averageRating = 'Rating is not available.';
+        }
+
+        return view('buku.galeri-buku', compact('bukus', 'galeris', 'averageRating'));
     }
+
+    public function storeRating(Request $request)
+    {
+        $buku = Buku::find($request->input('buku_id'));
+        $ratingValue = $request->input('rating');
+
+        // Store the rating in the database, along with any other relevant data
+        $rating = new Rating();
+        $rating->buku_id = $buku->id;
+        $rating->rating = $ratingValue;
+        $rating->user_email = auth()->user()->email;
+        $rating->save();
+        // Redirect the user to a relevant page
+        return redirect()->back()->with('success', 'Thank you for your rating!');
+    }
+
+    public function myfavorite()
+    {
+        $favorites = Favorite::with('buku')
+            ->where('user_email', auth()->user()->email)
+            ->orderBy("id", "desc")
+            ->paginate(10);
+
+        $no = 10 * ($favorites->currentPage() - 1);
+
+        return view('buku.myfavorite', compact('favorites', 'no'));
+    }
+
+
+    public function storeFavorite(Request $request)
+    {
+        $buku = Buku::find($request->input('buku_id'));
+        $fav = new Favorite();
+        $fav->buku_id = $buku->id;
+        $fav->user_email = auth()->user()->email;
+        $fav->save();
+
+        $favorites = Favorite::with('buku')
+            ->where('user_email', auth()->user()->email)
+            ->orderBy("id", "desc")
+            ->paginate(10);
+
+        $no = 10 * ($favorites->currentPage() - 1);
+
+        return view('buku.myfavorite', compact('favorites', 'no'));
+    }
+
+
+
 }
